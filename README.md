@@ -34,3 +34,36 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Supabase setup (local)
+
+1. Copy `.env.local.example` to `.env.local` and fill in your Supabase values.
+
+```
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key (optional)
+```
+
+2. Client library and wrappers are in `lib/supabaseClient.ts` and `lib/api.ts`.
+
+Example usage in a component (client-side):
+
+```tsx
+import React, { useEffect } from 'react'
+import api from '@/lib/api'
+
+export default function Demo() {
+	useEffect(() => {
+		async function run() {
+			const { data, error } = await api.fetchRows('profiles')
+			console.log({ data, error })
+		}
+		run()
+	}, [])
+
+	return <div>Check console for API results</div>
+}
+```
+
+If you need additional wrappers for third-party services (OpenAI, Paystack, Anthropic, etc.), tell me which endpoints you want, and I will add typed helper methods.
